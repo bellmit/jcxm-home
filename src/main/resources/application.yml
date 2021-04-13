@@ -1,0 +1,146 @@
+#服务器配置
+server:
+    port: 80
+    undertow:
+        # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+        io-threads: 16
+        # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+        worker-threads: 400
+        # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+        buffer-size: 1024
+        # 是否分配的直接内存
+        direct-buffers: true
+
+spring:
+    redis:
+        host: 120.79.248.210
+        port: 6379
+#        host: 60.160.190.129
+#        port: 9090
+#        password: ylkjredis
+        database: 0
+        ssl: false
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/jcxm_home_test?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+        #url: jdbc:mysql://localhost:3306/jcxm_home?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+        username: root
+        password: root
+        druid:
+            validation-query: select 1
+            validation-query-timeout: 2000
+            initial-size: 5
+            max-active: 20
+            min-idle: 5
+            max-wait: 60000
+            test-on-borrow: false
+            test-on-return: false
+            test-while-idle: true
+            time-between-eviction-runs-millis: 60000
+            min-evictable-idle-time-millis: 300000
+            stat-view-servlet:
+                enabled: true
+                login-username: blade
+                login-password: 1qaz@WSX
+            web-stat-filter:
+                enabled: true
+                url-pattern: /*
+                exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+                session-stat-enable: true
+                session-stat-max-count: 10
+# mybatis
+mybatis-plus:
+    mapper-locations: classpath:org/springblade/**/mapper/*Mapper.xml
+    type-handlers-package: org.springblade.common.handle
+    typeAliasesPackage: org.springblade.**.entity
+    global-config:
+        banner: false
+        db-config:
+            id-type: id_worker
+            insert-strategy: not_null
+            update-strategy: not_null
+            select-strategy: not_empty
+            table-underline: true
+            logic-delete-value: 1
+            logic-not-delete-value: 0
+    configuration:
+        map-underscore-to-camel-case: true
+        cache-enabled: false
+
+#swagger公共信息
+swagger:
+    title: 衍蓝数据平台接口文档系统
+    description: 衍蓝数据平台接口文档系统
+    version: 1.0.0
+    license: Powered By ylkj
+    license-url: www.cnynld.com
+    terms-of-service-url: www.cnynld.com
+
+#oss默认配置
+oss:
+    enabled: true
+    name: minio
+    tenant-mode: false
+    endpoint: http://120.79.248.210:8000
+    access-key: admin
+    secret-key: ylkj65156676
+    bucket-name: notice
+
+
+#blade配置
+blade:
+    xss:
+      enabled: true
+      skip-url:
+        - /ylkj-notice/article/submit
+    secure:
+      skip-url:
+        - /ylkj-fiel/upload/upload
+        - /ylkj-notice/article/popup
+        - /ylkj-notice/article/list
+    lock:
+        enabled: false
+        address: redis://hlxxzt.cn:10001
+    file:
+        remote-mode: true
+        upload-domain: http://localhost:8999
+        remote-path: /usr/share/nginx/html
+    log:
+        request:
+            enabled: false
+    mybatis-plus:
+        sql-log: false
+
+
+
+#feign 配置
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          timeout:
+            enabled: true
+          thread:
+            timeoutInMilliseconds: 10000
+
+ylkj:
+    iam:
+        url: http://10.20.0.1:10015
+        #url: http://127.0.0.1:10015
+        client-id: HOME
+        client-secret: 0ad2e39f6642a420b87a877ea01af7dd

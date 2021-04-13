@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.TargetMapper">
+
+    <!--    &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+    <!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.Target">
+        <result column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="content" property="content"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_at" property="updateAt"/>
+        <result column="ec_time" property="ecTime"/>
+        <result column="ac_time" property="acTime"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+    <!--    新增-->
+    <insert id="insertTarget" parameterType="target">
+        insert into tb_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content !=null">
+                content,
+            </if>
+            <if test="cid !=null">
+                cid,
+            </if>
+            <if test="createAt !=null">
+                create_at,
+            </if>
+            <if test="updateAt !=null">
+                update_at,
+            </if>
+            <if test="ecTime !=null">
+                ec_time,
+            </if>
+            <if test="acTime !=null">
+                ac_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content !=null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="createAt !=null">
+                #{createAt},
+            </if>
+            <if test="updateAt !=null">
+                #{updateAt},
+            </if>
+            <if test="ecTime !=null">
+                #{ecTime},
+            </if>
+            <if test="acTime !=null">
+                #{acTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!--    逻辑删除-->
+    <update id="deleteById">
+        update tb_target
+        set is_deleted=1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--    修改-->
+    <update id="update" parameterType="target">
+        update tb_target
+        <set>
+            <if test="content !=null">
+                content=#{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                cid=#{cid,jdbcType=INTEGER},
+            </if>
+            <if test="createAt !=null">
+                create_at=#{createAt},
+            </if>
+            <if test="updateAt !=null">
+                update_at=#{updateAt},
+            </if>
+            <if test="ecTime !=null">
+                ec_time=#{ecTime},
+            </if>
+            <if test="acTime !=null">
+                ac_time=#{acTime},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--    查询所有-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select t.id,
+               t.cid,
+               t.content,
+               t.create_at,
+               t.update_at,
+               t.is_deleted,
+               t.ec_time,
+               t.ac_time
+        from tb_target as t
+        where t.cid = #{c.id}
+          and t.is_deleted = 0
+        order by t.create_at desc
+    </select>
+    <!--    详情-->
+    <select id="selectById" resultType="org.springblade.modules.group.entity.Target">
+        select t.id,
+               t.cid,
+               t.content,
+               t.create_at,
+               t.update_at,
+               t.is_deleted,
+               t.ec_time,
+               t.ac_time
+        from tb_target as t
+        where id = #{id}
+          and t.is_deleted = 0
+    </select>
+
+    <!--&lt;!&ndash;物理删除&ndash;&gt;-->
+    <!--    <delete id="deleteById">-->
+    <!--        delete-->
+    <!--        from tb_target-->
+    <!--        where id = #{id,jdbcType=INTEGER}-->
+    <!--    </delete>-->
+</mapper>

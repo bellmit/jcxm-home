@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.UploadimgMapper">
+
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.Uploadimg">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="suffix" jdbcType="VARCHAR" property="suffix" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+        <result column="file_size" jdbcType="BIGINT" property="fileSize" />
+        <result column="gbgid" jdbcType="BIGINT" property="gbgid" />
+        <result column="gimgid" jdbcType="BIGINT" property="gimgid" />
+        <result column="abgid" jdbcType="BIGINT" property="abgid" />
+        <result column="aimgid" jdbcType="BIGINT" property="aimgid" />
+        <result column="clogid" jdbcType="BIGINT" property="clogid" />
+        <result column="eimgid" jdbcType="BIGINT" property="eimgid" />
+        <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    </resultMap>
+
+    <select id="findByIds"  resultMap="BaseResultMap">
+        select * from  uploadfile where id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findByclogid"  resultMap="BaseResultMap">
+        select * from uploadfile where clogid=#{clogid} order by create_at desc limit 0,1;
+    </select>
+
+    <select id="findBygbgid"  resultMap="BaseResultMap">
+        select * from uploadfile where gbgid=#{gbgid} order by create_at desc limit 0,1;
+    </select>
+
+    <select id="findBygimgid"  resultMap="BaseResultMap">
+        select * from uploadfile where gimgid=#{gimgid} order by create_at desc limit 0,1;
+    </select>
+
+    <select id="findBycimgid"  resultMap="BaseResultMap">
+        select * from uploadfile where cimgid=#{cimgid} order by create_at desc limit 0,1;
+    </select>
+
+
+
+</mapper>

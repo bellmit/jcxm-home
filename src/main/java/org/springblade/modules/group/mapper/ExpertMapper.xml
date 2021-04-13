@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.ExpertMapper">
+
+    <!--    &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+    <!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.vo.ExpertVO">
+        <result column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="sex" property="sex"/>
+        <result column="title" property="title"/>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_at" property="updateAt"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="url" property="url"/>
+
+    </resultMap>
+    <!--    新增-->
+    <insert id="insertExpert" parameterType="expert">
+        insert into tb_expert
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name !=null">
+                name,
+            </if>
+            <if test="title !=null">
+                title,
+            </if>
+            <if test="content !=null">
+                content,
+            </if>
+            <if test="cid !=null">
+                cid,
+            </if>
+            <if test="sex !=null">
+                sex,
+            </if>
+            <if test="createAt !=null">
+                create_at,
+            </if>
+            <if test="updateAt !=null">
+                update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name !=null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="title !=null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content !=null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="sex !=null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt !=null">
+                #{createAt},
+            </if>
+            <if test="updateAt !=null">
+                #{updateAt},
+            </if>
+        </trim>
+    </insert>
+    <!--    修改-->
+    <update id="update" parameterType="expert">
+        update tb_expert
+        <set>
+            <if test="name !=null">
+                name =#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="title !=null">
+                title=#{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content !=null">
+                content=#{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                cid=#{cid,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted !=null">
+                is_deleted=#{isDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="sex !=null">
+                sex=#{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="update_at !=null">
+                update_at=#{updateAt},
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT e.id,
+               e.cid,
+               e.title,
+               e.name,
+               e.sex,
+               e.content,
+               e.is_deleted,
+               e.create_at,
+               e.update_at,
+               u.url
+        from tb_expert as e,
+             uploadfile as u
+        WHERE e.cid = #{cid}
+          and u.eimgid = e.id
+          and e.is_deleted = 0
+        order by e.create_at desc LIMIT 50
+    </select>
+    <!--    专家详情-->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT e.id,
+               e.cid,
+               e.title,
+               e.name,
+               e.sex,
+               e.content,
+               e.is_deleted,
+               e.create_at,
+               e.update_at,
+               u.url
+        from tb_expert as e,
+             uploadfile u
+        WHERE e.id = #{id}
+          and u.eimgid = e.id
+          and e.is_deleted = 0
+        order by u.create_at desc LIMIT 10
+    </select>
+    <!--    逻辑删除-->
+    <update id="deleteById">
+        update tb_expert
+        set is_deleted=1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!--&lt;!&ndash;    物理删除&ndash;&gt;-->
+    <!--    <delete id="deleteById">-->
+    <!--        delete-->
+    <!--        from tb_expert-->
+    <!--        where id = #{id,jdbcType=INTEGER}-->
+    <!--    </delete>-->
+</mapper>

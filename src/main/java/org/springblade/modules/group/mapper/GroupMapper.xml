@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.GroupMapper">
+
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.Group">
+        <result column="id" property="id" />
+        <result column="gname" property="gname" />
+        <result column="parent_id" property="parentId" />
+        <result column="level" property="level" />
+        <result column="seq" property="seq" />
+        <result column="is_deleted" property="isdeleted" />
+        <result column="gename" property="gename" />
+        <result column="content" property="content" />
+        <result column="about" property="about" />
+        <result column="isgroup" property="isgroup" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, gname, parent_id, level, seq, is_deleted, gename, content,about,isgroup
+    </sql>
+    <select id="getAllGroup" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_group where is_deleted=0
+    </select>
+
+    <select id="getGroupBylevel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_group where is_deleted=0 and level like concat(#{level},'%')
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from tb_group
+        where id = #{id,jdbcType=INTEGER} and is_deleted=0
+    </select>
+
+    <select id="countByNameAndParentId" parameterType="map" resultType="int">
+        SELECT count(1)
+        FROM tb_group
+        WHERE gname = #{name}
+        <if test="parentId != null">
+            AND parent_id = #{parentId}
+        </if>
+        and is_deleted=0
+    </select>
+
+    <select id="iscompany" parameterType="java.lang.Integer" resultType="int">
+        SELECT count(1)
+        FROM tb_company
+        WHERE id in(select cid from tb_group_company where gid=#{parentId})
+        and is_deleted=0
+    </select>
+
+
+
+    <insert id="insertSelective" parameterType="org.springblade.modules.group.entity.Group" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_group
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+
+            <if test="gname != null" >
+                gname,
+            </if>
+            <if test="parentId != null" >
+                parent_id,
+            </if>
+            <if test="level != null" >
+                level,
+            </if>
+            <if test="seq != null" >
+                seq,
+            </if>
+            <if test="isdeleted != null" >
+                is_deleted,
+            </if>
+            <if test="gename != null" >
+                gename,
+            </if>
+            <if test="content != null" >
+                content,
+            </if>
+            <if test="about != null" >
+                about,
+            </if>
+            <if test="isgroup != null" >
+                isgroup,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="gname != null" >
+                #{gname,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="level != null" >
+                #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="seq != null" >
+                #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="isdeleted != null" >
+                #{isdeleted,jdbcType=INTEGER},
+            </if>
+            <if test="gename != null" >
+                #{gename,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="about != null" >
+                #{about,jdbcType=VARCHAR},
+            </if>
+            <if test="isgroup != null" >
+                #{isgroup,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateGroup" parameterType="org.springblade.modules.group.entity.Group" >
+        update tb_group
+        <set >
+            <if test="gname != null" >
+                gname= #{gname,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null" >
+                parent_id= #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="level != null" >
+                level=#{level,jdbcType=VARCHAR},
+            </if>
+            <if test="seq != null" >
+                seq= #{seq,jdbcType=INTEGER},
+            </if>
+            <if test="isdeleted != null" >
+                is_deleted= #{isdeleted,jdbcType=INTEGER},
+            </if>
+            <if test="gename != null" >
+                gename=#{gename,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content=#{content,jdbcType=VARCHAR},
+            </if>
+            <if test="about != null" >
+                about=#{about,jdbcType=VARCHAR},
+            </if>
+            <if test="isgroup != null" >
+                isgroup=#{isgroup,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="batchUpdateLevel" parameterType="org.springblade.modules.group.entity.Group">
+            update tb_group
+            SET level = #{group.level}
+            WHERE id = #{group.id};
+    </update>
+
+</mapper>

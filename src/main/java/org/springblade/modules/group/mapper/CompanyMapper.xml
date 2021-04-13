@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.CompanyMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.Company">
+    <result column="id" property="id" />
+        <result column="cname" property="cname" />
+        <result column="ccontent" property="ccontent" />
+        <result column="is_deleted" property="isdeleted" />
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+        id, cname, ccontent, is_deleted
+    </sql>
+    <select id="getListTbCompany" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_company where id in (select cid from tb_group_company where gid=#{groupId}) and is_deleted=0
+    </select>
+    <select id="getListTbCompanyForlevel"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_company where id in(select distinct cid from tb_group_company where gid in (select id from tb_group where level like concat(#{level},'%'))) and is_deleted=0
+    </select>
+
+    <select id="getListTbCompanyForname"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_company where id in(select distinct cid from tb_group_company where gid in (select id from tb_group where gname = #{gname}))and is_deleted=0
+    </select>
+
+    <select id="getCompanyId"  resultType="java.lang.Integer">
+        select id
+        from tb_company where cname=#{cname} and is_deleted=0
+    </select>
+
+    <select id="getCountbyId"  resultType="java.lang.Integer">
+        select count(1)
+        from tb_group_company where cid=#{cid}
+    </select>
+
+    <insert id="insertCompany" parameterType="org.springblade.modules.group.entity.Company" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_company
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="cname != null" >
+                cname,
+            </if>
+            <if test="ccontent != null" >
+                ccontent,
+            </if>
+            <if test="isdeleted != null" >
+                is_deleted,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="cname != null" >
+                #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="ccontent != null" >
+                #{ccontent,jdbcType=INTEGER},
+            </if>
+            <if test="isdeleted != null" >
+                #{isdeleted,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCompany" parameterType="org.springblade.modules.group.entity.Company" >
+        update tb_company
+        <set >
+            <if test="cname != null" >
+                cname= #{cname,jdbcType=VARCHAR},
+            </if>
+            <if test="ccontent != null" >
+                ccontent= #{ccontent,jdbcType=INTEGER},
+            </if>
+            <if test="isdeleted != null" >
+                is_deleted= #{isdeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectCompanyPage"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tb_company where id in(select distinct cid from tb_group_company where gid in (select id from tb_group where level like concat(#{grouplevel},'%'))) and is_deleted=0   </select>
+
+</mapper>

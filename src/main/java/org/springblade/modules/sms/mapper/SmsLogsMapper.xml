@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.sms.mapper.SmsLogsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="smsLogsResultMap" type="org.springblade.modules.sms.entity.SmsLogs">
+        <result column="id" property="id"/>
+        <result column="template_id" property="templateId"/>
+        <result column="create_at" property="createAt"/>
+        <result column="request_id" property="requestId"/>
+        <result column="message" property="message"/>
+        <result column="biz_id" property="bizId"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="phone" property="phone"/>
+        <result column="error_info" property="errorInfo"/>
+    </resultMap>
+
+    <select id="selectSmsLogsPage" resultMap="smsLogsResultMap">
+        select * from blade_sms_logs
+    </select>
+
+</mapper>

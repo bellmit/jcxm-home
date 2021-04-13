@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.AchievementMapper">
+    <!--    &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+    <!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.vo.AchievementVO">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="cid" property="cid"/>
+        <result column="brief" property="brief"/>
+        <result column="content" property="content"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_at" property="updateAt"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="url" property="url"/>
+    </resultMap>
+    <!--    新增成果信息-->
+    <insert id="insertAchievement" parameterType="achievement">
+        insert into tb_achievements
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name !=null">
+                name,
+            </if>
+            <if test="brief !=null">
+                brief,
+            </if>
+            <if test="content !=null">
+                content,
+            </if>
+            <if test="cid !=null">
+                cid,
+            </if>
+            <if test="createAt !=null">
+                create_at,
+            </if>
+            <if test="updateAt !=null">
+                update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name !=null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="brief !null">
+                #{brief,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="content !=null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="createAt !=null">
+                #{createAt},
+            </if>
+            <if test="updateAt !=null">
+                #{updateAt},
+            </if>
+        </trim>
+    </insert>
+    <!--    获取某单位下的所有成果-->
+    <select id="selectAllAchievements" resultType="org.springblade.modules.group.vo.AchievementVO">
+        select a.id,
+               a.name,
+               a.brief,
+               a.content,
+               a.cid,
+               a.create_at,
+               a.update_at,
+               a.is_deleted,
+               u.url
+        from tb_achievements as a,
+             uploadfile as u
+        where a.cid = #{cid}
+          and u.abgid = a.id
+          and a.is_deleted = 0
+        ORDER BY u.create_at desc LIMIT 50;
+    </select>
+
+    <!--获取某成果详情-->
+    <select id="selectById" resultType="org.springblade.modules.group.vo.AchievementVO">
+        select a.id,
+               a.name,
+               a.brief,
+               a.content,
+               a.cid,
+               a.create_at,
+               a.update_at,
+               a.is_deleted,
+               u.url
+        from tb_achievements as a,
+             uploadfile as u
+        where a.id = #{id}
+          and a.is_deleted = 0
+          and u.aimgid = a.id
+        ORDER BY u.create_at DESC LIMIT 10;
+    </select>
+    <!--修改achievement-->
+    <update id="update" parameterType="achievement">
+        update tb_achievements
+        <set>
+            <if test="name !=null">
+                name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="brief !=null">
+                brief=#{brief,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="content !=null">
+                content=#{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cid !=null">
+                cid=#{cid,jdbcType=INTEGER},
+            </if>
+            <if test="createAt !=null">
+                create_at=#{createAt},
+            </if>
+            <if test="updateAt !=null">
+                update_at=#{updateAt},
+            </if>
+            <if test="isDeleted !=null">
+                is_deleted=#{isDeleted,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+    <!--    &lt;!&ndash;    物理删除&ndash;&gt;-->
+    <!--    <delete id="deleteById">-->
+    <!--        delete-->
+    <!--        from tb_achievements-->
+    <!--        where id = #{id,jdbcType=INTEGER}-->
+    <!--    </delete>-->
+    <!--    逻辑删除-->
+    <update id="deleteById">
+        update tb_achievements
+        set is_deleted=1
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

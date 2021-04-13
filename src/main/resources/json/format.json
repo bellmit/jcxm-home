@@ -1,0 +1,14 @@
+ {
+       "mysql": [{"from":"TINYINT","to":"整型I"},{"from": "SMALLINT", "to":"整型I"},{"from": "MEDIUMINT", "to":"整型I"},{"from": "INT", "to":"整型I"},{"from": "INTEGER", "to":"整型I"},{"from": "BIGINT", "to":"整型I"},
+           {"from": "FLOAT", "to": "浮点型F"},{"from": "DOUBLE", "to":"双精度型B"},{"from": "DECIMAL", "to":"双精度型B"},{"from": "DATE", "to":"日期型D"},{"from": "TIME", "to":"日期时间型T"},{"from": "YEAR", "to":"日期型D"},
+           {"from": "DATETIME", "to": "日期时间型T"},{"from": "TIMESTAMP", "to": "日期时间型T"},{"from": "CHAR", "to":"字符串型C"},{"from": "VARCHAR", "to":"字符串型C"},{"from":"TINYBLOB", "to":"字符串型C"},
+           {"from": "TINYTEXT", "to": "字符串型C"},{"from": "BLOB", "to": "长文本text"},{"from": "TEXT", "to": "长文本text"},{"from": "MEDIUMBLOB", "to": "长文本text"},{"from": "MEDIUMTEXT", "to": "长文本text"},{"from": "LONGBLOB", "to": "长文本text"},{"from": "LONGTEXT", "to": "长文本text"}],
+       "access": [{"from":"Text","to":"字符串型C"},{"from": "Memo", "to": "长文本text"},{"from": "Byte","to":"整型I"},{"from": "Integer","to":"整型I"},{"from": "Long","to":"数值型N"},{"from": "Single", "to":"浮点型F"},{"from": "Double", "to":"双精度型B"},{"from": "Currency","to":"货币型Y"},
+            {"from": "AutoNumber","to": "整型I"},{"from": "Date/Time","to": "日期时间型T"},{"from": "Yes/No","to": "逻辑型L"},{"from": "Ole Object","to": "长文本text"},{"from": "Hyperlink","to": "字符串型C"},{"from": "Lookup Wizard","to": "字符串型C"}],
+       "sqlserver": [{"from": "char", "to": "字符串型C"},{"from": "varchar", "to": "字符串型C"},{"from": "text", "to":"长文本text"}, {"from": "nchar", "to": "字符串型C"}, {"from": "nvarchar", "to": "字符串型C"},{"from": "ntext", "to":"长文本text"},
+            {"from": "bit", "to":"逻辑型L"},{"from": "binary", "to":"二进制blob"},{"from": "varbinary", "to":"二进制blob"},{"from": "image", "to":"二进制blob"},{"from": "tinyint", "to":"整型I"},{"from": "smallint", "to": "整型I"},{"from":"int", "to":"整型I"},{"from": "bigint", "to":"数值型N"},
+            {"from": "decimal", "to":"双精度型B"},{"from": "numeric", "to":"双精度型B"},{"from": "smallmoney", "to":"货币型Y"},{"from": "money", "to":"货币型Y"},{"from": "float", "to":"浮点型F"},{"from": "real", "to":"双精度型B"},{"from":"datetime" , "to":"日期时间型T"},
+            {"from":"datetime2" , "to":"日期时间型T"},{"from":"smalldatetime" , "to":"日期型D"},{"from":"date" , "to":"日期型D"},{"from":"time" , "to":"日期时间型T"}],
+       "oracle": [{"from": "CHAR", "to":"字符串型C"},{"from": "NCHAR", "to":"字符串型C"},{"from": "VARCHAR2", "to":"字符串型C"},{"from": "NVARCHAR2", "to":"字符串型C"},{"from": "NUMBER", "to":"双精度型B"},{"from": "LONG", "to":"长文本text"},{"from": "REAL", "to":"数值型N"},{"from": "DECIMAL", "to":"双精度型B"},{"from": "INTEGER", "to":"整型I"},{"from": "FLOAT", "to":"浮点型F"},
+            {"from": "DATE", "to":"日期型D"},{"from": "TIMESTAMP","to": "日期时间型T"},{"from": "CLOB", "to": "长文本text"},{"from": "NCLOB", "to": "长文本text"},{"from": "RAW", "to": "二进制blob"},{"from": "ROWID", "to": "二进制blob"}]
+}

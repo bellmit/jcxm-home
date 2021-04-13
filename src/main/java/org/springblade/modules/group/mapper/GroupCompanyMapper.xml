@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.group.mapper.GroupCompanyMapper">
+
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.GroupCompany">
+    <result column="id" property="id" />
+        <result column="cid" property="cid" />
+        <result column="gid" property="gid" />
+    </resultMap>
+
+    <insert id="insertGroupCompany" parameterType="org.springblade.modules.group.entity.GroupCompany" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_group_company
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="cid != null" >
+                cid,
+            </if>
+            <if test="gid != null" >
+                gid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="cid != null" >
+                #{cid,jdbcType=INTEGER},
+            </if>
+            <if test="gid != null" >
+                #{gid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteGroupCompany" parameterType="java.lang.Integer" >
+        delete from tb_group_company
+        where cid = #{cid,jdbcType=INTEGER} and gid= #{gid,jdbcType=INTEGER}
+    </delete>
+
+</mapper>
