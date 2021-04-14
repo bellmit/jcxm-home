@@ -14,33 +14,45 @@
         <result column="abgid" jdbcType="BIGINT" property="abgid" />
         <result column="aimgid" jdbcType="BIGINT" property="aimgid" />
         <result column="clogid" jdbcType="BIGINT" property="clogid" />
+        <result column="cimgid" jdbcType="BIGINT" property="cimgid"/>
         <result column="eimgid" jdbcType="BIGINT" property="eimgid" />
         <result column="file_type" jdbcType="VARCHAR" property="fileType" />
     </resultMap>
 
     <select id="findByIds"  resultMap="BaseResultMap">
-        select * from  uploadfile where id in
+        select * from  uploadimg where id in
         <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
     <select id="findByclogid"  resultMap="BaseResultMap">
-        select * from uploadfile where clogid=#{clogid} order by create_at desc limit 0,1;
+        select * from uploadimg where clogid=#{clogid} order by create_at desc limit 0,1;
     </select>
 
     <select id="findBygbgid"  resultMap="BaseResultMap">
-        select * from uploadfile where gbgid=#{gbgid} order by create_at desc limit 0,1;
+        select * from uploadimg where gbgid=#{gbgid} order by create_at desc limit 0,1;
     </select>
 
     <select id="findBygimgid"  resultMap="BaseResultMap">
-        select * from uploadfile where gimgid=#{gimgid} order by create_at desc limit 0,1;
+        select * from uploadimg where gimgid=#{gimgid} order by create_at desc limit 0,1;
     </select>
 
     <select id="findBycimgid"  resultMap="BaseResultMap">
-        select * from uploadfile where cimgid=#{cimgid} order by create_at desc limit 0,1;
+        select * from uploadimg where cimgid=#{cimgid} order by create_at desc limit 1;
     </select>
 
+
+
+    <select id="findByabgid" resultType="org.springblade.modules.group.entity.Uploadimg">
+        select * from uploadimg where abgid=#{abgid} order by create_at desc limit 1;
+    </select>
+    <select id="findByaimgid" resultType="org.springblade.modules.group.entity.Uploadimg">
+        select * from uploadimg where aimgid=#{aimgid} order by create_at desc limit 1;
+    </select>
+    <select id="findByeimgid" resultType="org.springblade.modules.group.entity.Uploadimg">
+        select * from uploadimg where eimgid=#{eimgid} order by create_at desc limit 1;
+    </select>
 
 
 </mapper>

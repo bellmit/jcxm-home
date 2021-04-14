@@ -42,4 +42,25 @@ public interface UploadimgMapper extends BaseMapper<Uploadimg> {
 	 * @return
 	 */
 	Uploadimg findBycimgid(@Param("cimgid") Integer cimgid);
+
+	/**
+	 *根据abgid查询
+	 * @param abgid
+	 * @return
+	 */
+	Uploadimg findByabgid(@Param("abgid") Integer abgid);
+
+	/**
+	 * 根据aimgid查询
+	 * @param aimgid
+	 * @return
+	 */
+	Uploadimg findByaimgid(@Param("aimgid") Integer aimgid);
+
+	/**
+	 * 根据eimgid查询
+	 * @param eimgid
+	 * @return
+	 */
+	Uploadimg findByeimgid(@Param("eimgid") Integer eimgid);
 }
