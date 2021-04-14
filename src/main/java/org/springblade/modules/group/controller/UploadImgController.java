@@ -102,7 +102,11 @@ public class UploadImgController {
 	public R<Uploadimg> getUploadimg(@RequestParam(value="gbgid",defaultValue ="0") Integer gbgid,
 									 @RequestParam(value="gimgid",defaultValue ="0") Integer gimgid,
 									 @RequestParam(value="clogid",defaultValue ="0") Integer clogid,
-									 @RequestParam(value="cimgid",defaultValue ="0") Integer cimgid){
+									 @RequestParam(value="cimgid",defaultValue ="0") Integer cimgid,
+									 @RequestParam(value ="abgid",defaultValue = "0") Integer abgid,
+									 @RequestParam(value ="aimgid",defaultValue = "0") Integer aimgid,
+									 @RequestParam(value ="eimgid",defaultValue = "0") Integer eimgid
+									 ){
 		Uploadimg uploadimg = new Uploadimg();
 		if(gbgid!=0){
 			uploadimg=uploadimgService.findBygbgid(gbgid);
@@ -115,6 +119,16 @@ public class UploadImgController {
 		}
 		if(cimgid!=0){
 			uploadimg=uploadimgService.findBycimgid(cimgid);
+		}
+		// 新加
+		if (abgid!=0){
+			uploadimg=uploadimgService.findByabgid(abgid);
+		}
+		if (aimgid!=0){
+			uploadimg=uploadimgService.findByaimgid(aimgid);
+		}
+		if (eimgid!=0){
+			uploadimg=uploadimgService.findByeimgid(eimgid);
 		}
 		return R.data(uploadimg);
 	}
