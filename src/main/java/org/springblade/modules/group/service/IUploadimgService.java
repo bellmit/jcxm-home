@@ -43,4 +43,24 @@ public interface IUploadimgService extends IService<Uploadimg> {
 	 */
 	public Uploadimg findBycimgid(Integer cimgid);
 
+	/**
+	 * 根据abgid查询
+	 * @param abgid
+	 * @return
+	 */
+	Uploadimg findByabgid(Integer abgid);
+
+	/**
+	 * 根据aimgid查询
+	 * @param aimgid
+	 * @return
+	 */
+	Uploadimg findByaimgid(Integer aimgid);
+
+	/**
+	 * 根据eimgid查询
+	 * @param eimgid
+	 * @return
+	 */
+	Uploadimg findByeimgid(Integer eimgid);
 }

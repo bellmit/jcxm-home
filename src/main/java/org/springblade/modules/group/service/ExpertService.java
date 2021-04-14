@@ -19,7 +19,7 @@ import java.util.List;
 public interface ExpertService extends IService<Expert> {
 	/**
 	 * 获取所有专家
-	 * @param company
+	 * @param cid
 	 * @return
 	 */
 	List<ExpertVO> getAllExpert(Integer cid);
@@ -29,7 +29,7 @@ public interface ExpertService extends IService<Expert> {
 	 * @param id
 	 * @return
 	 */
-	List<ExpertVO> getDetailsById(Integer id);
+	ExpertVO getDetailsById(Integer id);
 
 	/**
 	 * 更新专家信息

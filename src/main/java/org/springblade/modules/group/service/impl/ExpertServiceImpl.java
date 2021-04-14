@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.modules.group.entity.Company;
 import org.springblade.modules.group.entity.Expert;
 import org.springblade.modules.group.mapper.ExpertMapper;
+import org.springblade.modules.group.mapper.UploadimgMapper;
 import org.springblade.modules.group.service.ExpertService;
 import org.springblade.modules.group.vo.ExpertVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,15 +25,36 @@ import java.util.List;
 public class ExpertServiceImpl extends ServiceImpl<ExpertMapper, Expert> implements ExpertService {
 	@Autowired
 	private ExpertMapper expertMapper;
+	@Autowired
+	private UploadimgMapper uploadimgMapper;
 
 	@Override
 	public List<ExpertVO> getAllExpert(Integer cid) {
-		return expertMapper.selectAll(cid);
+		List<Expert> expertList = expertMapper.selectAll(cid);
+		List<ExpertVO> expertVOList=new ArrayList<>();
+		for (Expert expert:expertList){
+			ExpertVO expertVO=ExpertVO.exp(expert);
+			if (uploadimgMapper.findByeimgid(expert.getId())!=null){
+				//拿到最新的专家图片
+				expertVO.setEimgurl(uploadimgMapper.findByeimgid(expert.getId()).getUrl());
+			}
+			expertVOList.add(expertVO);
+		}
+		//返回volist
+		return expertVOList;
 	}
 
 	@Override
-	public List<ExpertVO> getDetailsById(Integer id) {
-		return expertMapper.selectById(id);
+	public ExpertVO getDetailsById(Integer id) {
+		//拿到专家信息
+		Expert expert = expertMapper.selectById(id);
+		//专家VO
+		ExpertVO expertVO=ExpertVO.exp(expert);
+		if (uploadimgMapper.findByeimgid(expert.getId())!=null){
+			//拿到最新的专家图片
+			expertVO.setEimgurl(uploadimgMapper.findByeimgid(expert.getId()).getUrl());
+		}
+		return expertVO;
 	}
 
 	@Override

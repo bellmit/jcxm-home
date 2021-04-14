@@ -1,7 +1,9 @@
 package org.springblade.modules.group.vo;
 
 import lombok.Data;
+import org.springblade.modules.group.entity.Achievement;
 import org.springblade.modules.group.entity.Expert;
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author zjm
@@ -11,6 +13,13 @@ import org.springblade.modules.group.entity.Expert;
  */
 @Data
 public class ExpertVO extends Expert {
-	private String url;
+
+	private String eimgurl;
+
+	public static ExpertVO exp(Expert expert) {
+		ExpertVO vo = new ExpertVO();
+		BeanUtils.copyProperties(expert, vo);
+		return vo;
+	}
 }
 

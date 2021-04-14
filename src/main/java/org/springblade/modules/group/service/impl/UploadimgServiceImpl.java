@@ -54,4 +54,25 @@ public class UploadimgServiceImpl extends ServiceImpl<UploadimgMapper, Uploadimg
 	public Uploadimg findBycimgid(Integer cimgid){
 		return uploadimgMapper.findBycimgid(cimgid);
 	}
+	public Uploadimg findByabgid(Integer abgid){
+		return uploadimgMapper.findByabgid(abgid);
+	};
+
+	/**
+	 * 根据aimgid查询
+	 * @param aimgid
+	 * @return
+	 */
+	public Uploadimg findByaimgid(Integer aimgid){
+		return uploadimgMapper.findByaimgid(aimgid);
+	};
+
+	/**
+	 * 根据eimgid查询
+	 * @param eimgid
+	 * @return
+	 */
+	public Uploadimg findByeimgid(Integer eimgid){
+		return uploadimgMapper.findByeimgid(eimgid);
+	};
 }

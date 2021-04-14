@@ -29,7 +29,7 @@ public interface AchievementService extends IService<Achievement> {
 	 * @param id
 	 * @return
 	 */
-	List<AchievementVO> selectById(Integer id);
+	AchievementVO selectById(Integer id);
 
 	/**
 	 * 更新
