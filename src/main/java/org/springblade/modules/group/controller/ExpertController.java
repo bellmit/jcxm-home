@@ -41,8 +41,8 @@ public class ExpertController {
 	@GetMapping("/getDetails")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "专家详情",notes ="传入专家id")
-	public R<List<ExpertVO>> getDetails(@Valid @RequestParam("id") Integer id){
-		List<ExpertVO> expertDetails= expertService.getDetailsById(id);
+	public R<ExpertVO> getDetails(@Valid @RequestParam("id") Integer id){
+		ExpertVO expertDetails= expertService.getDetailsById(id);
 		return R.data(expertDetails);
 	}
 
