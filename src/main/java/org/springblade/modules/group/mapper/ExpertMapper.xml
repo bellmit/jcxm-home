@@ -16,9 +16,13 @@
         <result column="create_at" property="createAt"/>
         <result column="update_at" property="updateAt"/>
         <result column="is_deleted" property="isDeleted"/>
-        <result column="url" property="url"/>
+        <result column="eimgurl" property="eimgurl"/>
 
     </resultMap>
+    <sql id="Base_Column_List">
+        id
+        ,cid,title,name,sex,content,is_deleted,create_at,update_at
+    </sql>
     <!--    新增-->
     <insert id="insertExpert" parameterType="expert">
         insert into tb_expert
@@ -99,41 +103,20 @@
     </update>
     <!--查询所有-->
     <select id="selectAll" resultMap="BaseResultMap">
-        SELECT e.id,
-               e.cid,
-               e.title,
-               e.name,
-               e.sex,
-               e.content,
-               e.is_deleted,
-               e.create_at,
-               e.update_at,
-               u.url
-        from tb_expert as e,
-             uploadfile as u
-        WHERE e.cid = #{cid}
-          and u.eimgid = e.id
-          and e.is_deleted = 0
-        order by e.create_at desc LIMIT 50
+        SELECT
+        <include refid="Base_Column_List"/>
+        from tb_expert
+        WHERE cid = #{cid}
+        and is_deleted = 0
+        order by create_at desc LIMIT 50
     </select>
     <!--    专家详情-->
     <select id="selectById" resultMap="BaseResultMap">
-        SELECT e.id,
-               e.cid,
-               e.title,
-               e.name,
-               e.sex,
-               e.content,
-               e.is_deleted,
-               e.create_at,
-               e.update_at,
-               u.url
-        from tb_expert as e,
-             uploadfile u
-        WHERE e.id = #{id}
-          and u.eimgid = e.id
-          and e.is_deleted = 0
-        order by u.create_at desc LIMIT 10
+        SELECT
+        <include refid="Base_Column_List"/>
+        from tb_expert
+        WHERE id = #{id}
+        and is_deleted = 0;
     </select>
     <!--    逻辑删除-->
     <update id="deleteById">

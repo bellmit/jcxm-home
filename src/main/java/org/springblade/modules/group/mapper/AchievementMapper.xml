@@ -5,7 +5,7 @@
     <!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.springblade.modules.group.vo.AchievementVO">
+    <resultMap id="BaseResultMap" type="org.springblade.modules.group.entity.Achievement">
         <result column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="cid" property="cid"/>
@@ -14,8 +14,10 @@
         <result column="create_at" property="createAt"/>
         <result column="update_at" property="updateAt"/>
         <result column="is_deleted" property="isDeleted"/>
-        <result column="url" property="url"/>
     </resultMap>
+    <sql id="Base_column_list">
+        id, name,brief,content,cid,create_at,update_at,is_deleted
+    </sql>
     <!--    新增成果信息-->
     <insert id="insertAchievement" parameterType="achievement">
         insert into tb_achievements
@@ -61,41 +63,22 @@
         </trim>
     </insert>
     <!--    获取某单位下的所有成果-->
-    <select id="selectAllAchievements" resultType="org.springblade.modules.group.vo.AchievementVO">
-        select a.id,
-               a.name,
-               a.brief,
-               a.content,
-               a.cid,
-               a.create_at,
-               a.update_at,
-               a.is_deleted,
-               u.url
-        from tb_achievements as a,
-             uploadfile as u
-        where a.cid = #{cid}
-          and u.abgid = a.id
-          and a.is_deleted = 0
-        ORDER BY u.create_at desc LIMIT 50;
+    <select id="selectAllAchievements" resultMap="BaseResultMap">
+        select
+        <include refid="Base_column_list"/>
+        from tb_achievements
+        where cid = #{cid}
+          and is_deleted = 0
+        ORDER BY create_at desc LIMIT 50;
     </select>
 
     <!--获取某成果详情-->
-    <select id="selectById" resultType="org.springblade.modules.group.vo.AchievementVO">
-        select a.id,
-               a.name,
-               a.brief,
-               a.content,
-               a.cid,
-               a.create_at,
-               a.update_at,
-               a.is_deleted,
-               u.url
-        from tb_achievements as a,
-             uploadfile as u
-        where a.id = #{id}
-          and a.is_deleted = 0
-          and u.aimgid = a.id
-        ORDER BY u.create_at DESC LIMIT 10;
+    <select id="selectById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_column_list"/>
+        from tb_achievements
+        where id = #{id}
+          and is_deleted = 0;
     </select>
     <!--修改achievement-->
     <update id="update" parameterType="achievement">

@@ -18,9 +18,9 @@ import java.util.List;
  */
 public interface ExpertMapper extends BaseMapper<Expert> {
 
-	List<ExpertVO> selectAll(@Param("cid") Integer cid);
+	List<Expert> selectAll(@Param("cid") Integer cid);
 
-	List<ExpertVO> selectById(@Param("id")Integer id);
+	ExpertVO selectById(@Param("id")Integer id);
 
 	boolean update(Expert expert);
 

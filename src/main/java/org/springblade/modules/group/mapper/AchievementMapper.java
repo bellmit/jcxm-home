@@ -22,14 +22,14 @@ public interface AchievementMapper extends BaseMapper<Achievement> {
 	 * @param cid
 	 * @return
 	 */
-	List<AchievementVO> selectAllAchievements(@Param("cid") Integer cid);
+	List<Achievement> selectAllAchievements(@Param("cid") Integer cid);
 
 	/**
 	 * 查询某一成果详情
 	 * @param id
 	 * @return
 	 */
-	List<AchievementVO> selectById(@Param("id")Integer id);
+	Achievement selectById(@Param("id")Integer id);
 
 	/**
 	 * 更新
