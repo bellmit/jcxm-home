@@ -1,6 +1,5 @@
 package org.springblade.modules.group.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,8 +38,8 @@ public class AchievementController {
 	@GetMapping("/getDetails")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "获取科研成果详情",notes = "传入achievement的id")
-	public R<List<AchievementVO>> getDetails(@Valid @RequestParam("id") Integer id){
-		List<AchievementVO> achievementDetails= achievementService.selectById(id);
+	public R<AchievementVO> getDetails(@Valid @RequestParam("id") Integer id){
+		AchievementVO achievementDetails= achievementService.selectById(id);
 		return R.data(achievementDetails);
 	}
 
